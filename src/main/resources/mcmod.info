@@ -1,13 +1,13 @@
 [
 {
   "modid": "villagebox",
-  "name": "Village Box",
-  "description": "Will add later",
+  "name": "Simple Village Box",
+  "description": "this mod base on villagebox,remove some items.",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ckhbox & wilusy"],
+  "authorList": ["ckhbox","wilusy","percy"],
   "credits": "---",
   "logoFile": "",
   "screenshots": [],

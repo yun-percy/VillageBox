@@ -13,8 +13,8 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 public class VillageBoxMod {
 
     public static final String MODID = "villagebox";
-    public static final String MODNAME = "Village Box";
-    public static final String VERSION = "0.6.0";
+    public static final String MODNAME = "Simple Village Box";
+    public static final String VERSION = "1.0.1";
 
     @Instance
     public static VillageBoxMod instance = new VillageBoxMod();
