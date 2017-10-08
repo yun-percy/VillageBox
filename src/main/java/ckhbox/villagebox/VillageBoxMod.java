@@ -14,14 +14,14 @@ public class VillageBoxMod {
 
     public static final String MODID = "villagebox";
     public static final String MODNAME = "Simple Village Box";
-    public static final String VERSION = "1.0.1";
+    public static final String VERSION = "1.0.2";
 
     @Instance
     public static VillageBoxMod instance = new VillageBoxMod();
 
     @SidedProxy(clientSide="ckhbox.villagebox.client.ClientProxy", serverSide="ckhbox.villagebox.common.CommonProxy")
     public static CommonProxy proxy;
-    
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent e) {
     	this.proxy.preInit(e);
