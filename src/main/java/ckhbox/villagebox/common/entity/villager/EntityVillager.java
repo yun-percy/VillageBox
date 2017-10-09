@@ -25,6 +25,7 @@ import ckhbox.villagebox.common.village.quest.IQuestProvider;
 import ckhbox.villagebox.common.village.quest.Quest;
 import ckhbox.villagebox.common.village.trading.ITrading;
 import ckhbox.villagebox.common.village.trading.TradingRecipeList;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.EntityCreature;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
@@ -58,48 +59,48 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 	private static final DataParameter<Integer> PROFESSIONID = EntityDataManager.<Integer>createKey(EntityVillager.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> FLAGS = EntityDataManager.<Integer>createKey(EntityVillager.class, DataSerializers.VARINT);
     private static final DataParameter<Integer> QUEST = EntityDataManager.<Integer>createKey(EntityVillager.class, DataSerializers.VARINT);
-	
+
 	private Profession profession;
 	//the player this villager is currently interacting with
 	private EntityPlayer interacting;
 	private EntityPlayer following;
-	
+
 	private IntBoundary home;
-	
+
 	//the canter of wandering when no home has been set to this villager
 	private Vec3d wanderCenter;
-	
+
 	//the upgrading history
 	private List<Integer> upgradingHistory = new ArrayList<Integer>(Arrays.asList(new Integer[]{99999}));//99999:caveman
-	
+
 	public EntityVillager(World worldIn){
 		this(worldIn, Rand.get().nextBoolean());
 	}
-	
+
 	public EntityVillager(World worldIn, boolean male){
 		this(worldIn, male?NameGenerator.getRandomMaleName():NameGenerator.getRandomFemaleName(), male);
 	}
-	
+
 	public EntityVillager(World worldIn, String name, boolean male) {
-		super(worldIn);		
-		
+		super(worldIn);
+
 		this.setSize(0.6F, 1.8F);
-		
+
 		if(!this.worldObj.isRemote){
 			this.setProfession(Rand.get().nextInt(3));
 		}
-		
+
 		this.setGender(male);
-		
+
 		if(!this.hasCustomName()){
 			this.setCustomNameTag(name);
 		}
-		
+
 		this.initAI();
 	}
-	
-	
-	
+
+
+
 	@Override
 	public EntityJumpHelper getJumpHelper() {
 		// TODO Auto-generated method stub
@@ -132,7 +133,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.5D);
     }
-	
+
 	@Override
 	protected void entityInit() {
 		super.entityInit();
@@ -144,10 +145,10 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 		this.getDataManager().register(QUEST, Integer.valueOf(-1));
 	}
 
-	
+
 	@Override
 	protected boolean processInteract(EntityPlayer player, EnumHand hand, ItemStack stack) {
-		
+
 		if(!player.worldObj.isRemote){
 			if(	(this.isInteracting() && this.interacting.isEntityAlive() && this.interacting != player) ||
 				(this.isFollowing() && this.following.isEntityAlive() && this.following != player)){
@@ -157,7 +158,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 				ItemStack itemstack = player.inventory.getCurrentItem();
 				if(itemstack != null && (itemstack.getItem() == ModItems.resetScroll || itemstack.getItem() == ModItems.dismissalScroll) && itemstack.stackSize > 0){
 					//if the player is using a reset or a dismissal scroll
-					if((itemstack.getItem() == ModItems.resetScroll && this.downgrade()) || 
+					if((itemstack.getItem() == ModItems.resetScroll && this.downgrade()) ||
 						(itemstack.getItem() == ModItems.dismissalScroll && this.dismiss(player))){
 						this.consumeItemFromStack(player,itemstack);
 					}
@@ -169,10 +170,10 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 				}
 			}
 		}
-		
+
 		return true;
 	}
-	
+
     protected void consumeItemFromStack(EntityPlayer player, ItemStack stack)
     {
         if (!player.capabilities.isCreativeMode)
@@ -190,20 +191,20 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 	public TradingRecipeList getTradingRecipeList() {
 		return this.profession.getTradingRecipeList();
 	}
-	
+
 	@Override
 	public void onTrade() {
 	}
-	
+
 	public Vec3d getWanderCenter(){
 		if(this.wanderCenter == null){
 			this.wanderCenter = new Vec3d(this.posX, this.posY, this.posZ);
 		}
 		return this.wanderCenter;
 	}
-	
+
 	//data flags
-	
+
 	/**
 	 * POS: 0=Interacting, 1=Following, 2=Has Home
 	 */
@@ -212,7 +213,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 		data = BitHelper.writeBit(data, pos, flag);
 		this.getDataManager().set(FLAGS, Integer.valueOf(data));
 	}
-	
+
 	/**
 	 * POS: 0=Interacting, 1=Following, 2=Has Home, 3 gender
 	 */
@@ -220,16 +221,16 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 		int data = ((Integer)this.getDataManager().get(FLAGS)).intValue();
 		return BitHelper.readBit(data, pos);
 	}
-	
+
 	//gender
 	public void setGender(boolean male){
 		this.setDataFlag(3, male);
 	}
-	
+
 	public boolean isMale(){
 		return this.getDataFlag(3);
 	}
-	
+
 	public int[] getUpgradingHistory(){
 		if(this.upgradingHistory == null || this.upgradingHistory.size() < 1)
 			return null;
@@ -239,7 +240,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 		}
 		return upgrades;
 	}
-	
+
 	public void setUpgradingHistory(int[] arr){
 		this.upgradingHistory.clear();
 		if(arr != null && arr.length > 0){
@@ -248,15 +249,15 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			}
 		}
 	}
-	
-	//interacting and following	
+
+	//interacting and following
 	public void setInteracting(EntityPlayer player){
 		if(!this.worldObj.isRemote){
 			this.interacting = player;
 			this.setDataFlag(0, (this.interacting != null));
 		}
 	}
-	
+
 	public boolean isInteracting(){
 		return this.getDataFlag(0);
 	}
@@ -264,7 +265,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 	public EntityPlayer getInteracting(){
 		return this.interacting;
 	}
-	
+
 	public void setFollowing(EntityPlayer player){
 		if(!this.worldObj.isRemote){
 			this.following = player;
@@ -272,21 +273,21 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			this.wanderCenter = null;
 		}
 	}
-	
+
 	public boolean isFollowing(){
 		return this.getDataFlag(1);
-	}	
-	
+	}
+
 	public EntityPlayer getFollowing(){
 		return this.following;
 	}
-	
+
 	//set home
 	public void setCurrentPosAsHome(EntityPlayer player){
 		//server side only
 		if(this.worldObj.isRemote)
 			return;
-		
+
 		//scan home boundary
 		IntBoundary bound = HouseDetector.getClosedField(this.worldObj, new IntVec3(this.posX,this.posY,this.posZ));
 		if(bound == null){
@@ -316,12 +317,12 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			}
 		}
 	}
-	
+
 	public void setHome(IntBoundary home){
 		this.home = home;
 		this.setDataFlag(2, true);
 	}
-	
+
 	public void moveOutHome(EntityPlayer player){
 		if(this.home != null){
 			DataVillage.get(this.worldObj).removeHome(this.getName(),home);
@@ -330,15 +331,15 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			player.addChatMessage(new TextComponentTranslation(PathHelper.full("message.villager.home.moveout"),this.getName()));
 		}
 	}
-	
+
 	public IntBoundary getHome(){
 		return this.home;
 	}
-	
+
 	public boolean hasHome(){
 		return this.getDataFlag(2);
 	}
-	
+
 	//profession
 	public Profession getProfession(){
 		if(this.worldObj.isRemote && (this.profession == null || ((Integer)this.getDataManager().get(PROFESSIONID)).intValue() != this.profession.getRegID())){
@@ -347,30 +348,30 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 		}
 		return this.profession;
 	}
-	
+
 	public void setProfession(int proid){
 		this.getDataManager().set(PROFESSIONID, Integer.valueOf(proid));
 		this.refreshProfession();
 	}
-	
+
 	public void upgrade(int pid){
 		if(!this.worldObj.isRemote){
 			TextComponentTranslation oldProName = new TextComponentTranslation(this.getProfession().getUnloalizedDisplayName());
 			this.upgradingHistory.add(this.getProfession().getRegID());
 			this.setProfession(pid);
-			TextComponentTranslation newProName = new TextComponentTranslation(this.getProfession().getUnloalizedDisplayName());	
+			TextComponentTranslation newProName = new TextComponentTranslation(this.getProfession().getUnloalizedDisplayName());
 			this.getServer().getPlayerList().sendChatMsg(new TextComponentTranslation(PathHelper.full("message.villager.upgrade"),this.getName(),oldProName,newProName));
 			//quest
 			this.removeCurrentQuest();
 		}
 	}
-	
+
 	public boolean downgrade(){
 		if(!this.worldObj.isRemote && this.upgradingHistory.size() > 0){
 			TextComponentTranslation oldProName = new TextComponentTranslation(this.getProfession().getUnloalizedDisplayName());
 			int last = this.upgradingHistory.remove(this.upgradingHistory.size() - 1);
 			this.setProfession(last);
-			TextComponentTranslation newProName = new TextComponentTranslation(this.getProfession().getUnloalizedDisplayName());	
+			TextComponentTranslation newProName = new TextComponentTranslation(this.getProfession().getUnloalizedDisplayName());
 			this.getServer().getPlayerList().sendChatMsg(new TextComponentTranslation(PathHelper.full("message.villager.downgrade"),this.getName(),oldProName,newProName));
 			//quest
 			this.removeCurrentQuest();
@@ -380,7 +381,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			return false;
 		}
 	}
-	
+
 	public boolean dismiss(EntityPlayer player){
 		if(!this.worldObj.isRemote){
 			this.moveOutHome(player);
@@ -393,9 +394,9 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			return false;
 		}
 	}
-	
+
 	public String getName(){
-		return this.getCustomNameTag();
+		return I18n.format(this.getProfession().getUnloalizedDisplayName());
 	}
 
 	@Override
@@ -410,7 +411,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			this.updateQuest();
 		}
 	}
-	
+
 	@Override
 	public void onDeath(DamageSource cause) {
 		super.onDeath(cause);
@@ -419,7 +420,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			this.getServer().getPlayerList().sendChatMsg(new TextComponentTranslation(PathHelper.full("message.villager.died"),this.getName()));
 		}
 	}
-	
+
 	@Override
 	protected void dropEquipment(boolean p_82160_1_, int p_82160_2_){
 		//don't drop any equipment
@@ -436,9 +437,9 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			this.setItemStackToSlot(Rand.get().nextBoolean()?EntityEquipmentSlot.MAINHAND:EntityEquipmentSlot.OFFHAND, this.profession.getRandomHoldItem());
 		}
 	}
-	
+
 	//quests
-	
+
 	//the quest idx and the left ticks are stored in the same integer
 	//the last one byte are used to store the index
 	//the rest bytes are used to store the time left
@@ -446,47 +447,47 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 	//the integer = 0xFE02
 	//ticks left = 0xFE = 254;
 	//quest index = 0x02 - 1 = 1
-	//* quest index is start from -1, end with 254, -1 means no quest 
-	
+	//* quest index is start from -1, end with 254, -1 means no quest
+
 	public void setCurrentQuestIdx(int idx){
 		int data = ((Integer)this.getDataManager().get(QUEST)).intValue();
 		data &= 0xFFFFFF00;
 		data |= Math.max(0, idx + 1);
 		this.getDataManager().set(QUEST, Integer.valueOf(data));
 	}
-	
+
 	public int getCurrentQuestIdx(){
 		int data = ((Integer)this.getDataManager().get(QUEST)).intValue();
 		int idx = (data & 0x000000FF) - 1;
 		return idx;
 	}
-	
+
 	public int getCurrentQuestTicks(){
 		int data = ((Integer)this.getDataManager().get(QUEST)).intValue();
 		data >>= 8;
 		return data;
 	}
-	
+
 	public void setCurrentQuestTicks(int ticks){
 		int data = ((Integer)this.getDataManager().get(QUEST)).intValue();
 		data &= 0x000000FF;
 		data |= (ticks << 8);
 		this.getDataManager().set(QUEST, Integer.valueOf(data));
 	}
-	
+
 	public int getCurrentQuestTicksLeft(){
 		return VBConfig.questLifetime - this.getCurrentQuestTicks();
 	}
-	
+
 	@Override
 	public void removeCurrentQuest(){
 		this.setCurrentQuestIdx(-1);
 		this.setCurrentQuestTicks(0);
 	}
-	
+
 	@Override
 	public void createNewQuest(){
-		if(this.getProfession() == null) 
+		if(this.getProfession() == null)
 			return;
 		List<Quest> quests= this.getProfession().getQuests();
 		//generate a random quest idx
@@ -494,20 +495,20 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 		this.setCurrentQuestIdx(idx);
 		this.setCurrentQuestTicks(0);
 	}
-	
+
 	@Override
 	public Quest getCurrentQuest(){
 		int idx = this.getCurrentQuestIdx();
-		if(idx < 0) 
+		if(idx < 0)
 			return null;
-		if(this.getProfession() == null) 
+		if(this.getProfession() == null)
 			return null;
 		List<Quest> quests = this.getProfession().getQuests();
-		if(quests == null || idx >= quests.size()) 
+		if(quests == null || idx >= quests.size())
 			return null;
 		return quests.get(idx);
 	}
-	
+
 	@Override
 	public void completeCurrentQuest(EntityPlayer player){
 		Quest q = this.getCurrentQuest();
@@ -515,7 +516,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			this.removeCurrentQuest();
 		}
 	}
-	
+
 	private void updateQuest(){
 		if(VBConfig.questFrequency <= 0) return;
 		if(this.getCurrentQuest() == null){
@@ -532,30 +533,30 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 			}
 		}
 	}
-	
+
 	//collections
 	private void addProIDToCollections(EntityPlayer player){
 		ExtendedPlayerProperties.get(player).collections.addProfession(this.getProfession());
 	}
-	
+
 	//-----
-	
+
 	@Override
 	public boolean canBeLeashedTo(EntityPlayer player) {
 		return false;
 	}
-	
+
     @SideOnly(Side.CLIENT)
     public boolean getAlwaysRenderNameTagForRender()
     {
         return true;
     }
-    
+
 	@Override
 	protected boolean canDespawn() {
 		return false;
 	}
-	
+
 	@Override
 	public void writeEntityToNBT(NBTTagCompound tagCompound) {
 		super.writeEntityToNBT(tagCompound);
@@ -606,7 +607,7 @@ public class EntityVillager extends EntityCreature implements ITrading, IQuestPr
 		}
 	}
 
-	
+
 	//----------------------------------
 	//upgrading preview
 	@SideOnly(Side.CLIENT)
