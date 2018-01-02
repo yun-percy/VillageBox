@@ -30,10 +30,10 @@ public class ItemWaterSword extends ItemSword{
 			EntityPlayer p = (EntityPlayer)entityIn;
 			if(p.getHeldItemMainhand() == stack || p.getHeldItemOffhand() == stack){
 				if(!p.isPotionActive(MobEffects.WATER_BREATHING)){
-					p.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING,40));
+					p.addPotionEffect(new PotionEffect(MobEffects.WATER_BREATHING,80));
 				}
 				if(!p.isPotionActive(MobEffects.SPEED)){
-					p.addPotionEffect(new PotionEffect(MobEffects.SPEED,40,1));
+					p.addPotionEffect(new PotionEffect(MobEffects.SPEED,80,1));
 				}
 			}
 		}

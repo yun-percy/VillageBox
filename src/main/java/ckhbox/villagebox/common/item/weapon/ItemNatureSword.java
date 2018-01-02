@@ -23,15 +23,15 @@ public class ItemNatureSword extends ItemSword{
 
 	@Override
 	public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker) {
-		if(!target.worldObj.isRemote){		
+		if(!target.worldObj.isRemote){
 			if(target instanceof EntityMob){
-				target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS,160,2));
-				target.addPotionEffect(new PotionEffect(MobEffects.POISON,160,2));
+				target.addPotionEffect(new PotionEffect(MobEffects.SLOWNESS,320,2));
+				target.addPotionEffect(new PotionEffect(MobEffects.POISON,320,2));
 			}
 		}
 		return super.hitEntity(stack, target, attacker);
 	}
-	
+
 	@Override
 	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
 		super.addInformation(stack, playerIn, tooltip, advanced);
