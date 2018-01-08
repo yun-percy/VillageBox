@@ -78,7 +78,7 @@ public class JsonDataManager {
 			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,mail,1,0"}));
 			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,1,0"}, new String[]{"villagebox,reset_scroll,1,0"}));
 
-			profession.upgradeProfessionIDs = new int[]{11, 12, 13, 14,15,16};
+			profession.upgradeProfessionIDs = new int[]{11, 12, 13, 14, 15, 16};
 			profession.upgradeRequirements = new String[]{"minecraft,book,1,0"};
 			profession.holdItems = new String[]{"villagebox,mail,1,0"};
 			profession.texture = "villagePostman";
@@ -198,7 +198,7 @@ public class JsonDataManager {
 			profession.holdItems = new String[]{"minecraft,fishing_rod,1,0"};
 			profession.texture = "fisherman";
 			profession.name = "fisherman";
-
+			data.professions.add(profession);
 		//====== 13 hunter ======
 			profession = new JsonProfession();
 			profession.id = 13;
