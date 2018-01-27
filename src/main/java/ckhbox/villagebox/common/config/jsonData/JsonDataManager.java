@@ -382,7 +382,6 @@ public class JsonDataManager {
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "villagebox,bench_oak,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "villagebox,bench_spruce,1,0"));
 			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,1,0"}, new String[]{"minecraft,armor_stand,1,0"}));
-			profession.upgradeProfessionIDs = new int[]{10, 17};
 			profession.upgradeRequirements = new String[]{"minecraft,diamond_axe,1,0", "villagebox,silver_coin,4,0"};
 			profession.holdItems = new String[]{"minecraft,log,1,0"};
 			profession.texture = "carpenter";
