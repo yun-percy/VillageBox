@@ -60,7 +60,7 @@ public class JsonDataManager {
 
 		//painter carpetmakercartoony
 		// bookseller bowmaker furnituremaker orchardist chef chefdessert
-		//====== 0 country postman ======
+		//====== 0 villager ======
 			//乡村邮差
 			//8:1,1:4  鸡蛋，墨囊，甘蔗
 			profession = new JsonProfession();
@@ -75,17 +75,18 @@ public class JsonDataManager {
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,1,0"}, "minecraft,reeds,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,reeds,4,0"));
 			//交易获取信封和降级卷轴
-			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,mail,1,0"}));
+			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,invitation,1,0"}));
 			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,1,0"}, new String[]{"villagebox,reset_scroll,1,0"}));
 
-			profession.upgradeProfessionIDs = new int[]{11, 12, 13, 14, 15, 16};
+			profession.upgradeProfessionIDs = new int[]{3, 4, 5, 6};
 			profession.upgradeRequirements = new String[]{"minecraft,book,1,0"};
 			profession.holdItems = new String[]{"villagebox,mail,1,0"};
-			profession.texture = "villagePostman";
-			profession.name = "villagePostman";
+			profession.texture = "villager";
+			profession.name = "villager";
 			data.professions.add(profession);
-
-		//====== 1 city postman ======
+		//====== 1 villager ======
+			//乡村邮差
+			//8:1,1:4  鸡蛋，墨囊，甘蔗
 			profession = new JsonProfession();
 			profession.id = 1;
 			//鸡蛋
@@ -98,16 +99,18 @@ public class JsonDataManager {
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,1,0"}, "minecraft,reeds,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,reeds,4,0"));
 			//交易获取信封和降级卷轴
-			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,mail,1,0"}));
+			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,invitation,1,0"}));
 			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,1,0"}, new String[]{"villagebox,reset_scroll,1,0"}));
-			profession.upgradeProfessionIDs = new int[]{21, 22, 23, 24,25};
+
+			profession.upgradeProfessionIDs = new int[]{3, 4, 5, 6};
 			profession.upgradeRequirements = new String[]{"minecraft,book,1,0"};
 			profession.holdItems = new String[]{"villagebox,mail,1,0"};
-			profession.texture = "cityPostman";
-			profession.name = "cityPostman";
+			profession.texture = "villager";
+			profession.name = "villager";
 			data.professions.add(profession);
-
-		//====== 2 shadow postman ======
+		//====== 2 villager ======
+			//乡村邮差
+			//8:1,1:4  鸡蛋，墨囊，甘蔗
 			profession = new JsonProfession();
 			profession.id = 2;
 			//鸡蛋
@@ -120,16 +123,18 @@ public class JsonDataManager {
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,1,0"}, "minecraft,reeds,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,reeds,4,0"));
 			//交易获取信封和降级卷轴
-			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,mail,1,0"}));
+			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,invitation,1,0"}));
 			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,1,0"}, new String[]{"villagebox,reset_scroll,1,0"}));
-			profession.upgradeProfessionIDs = new int[]{31, 32, 33};
+
+			profession.upgradeProfessionIDs = new int[]{3, 4, 5, 6};
 			profession.upgradeRequirements = new String[]{"minecraft,book,1,0"};
 			profession.holdItems = new String[]{"villagebox,mail,1,0"};
-			profession.texture = "shadowPostman";
-			profession.name = "shadowPostman";
+			profession.texture = "villager";
+			profession.name = "villager";
 			data.professions.add(profession);
-
-		//====== 3 holy postman ======
+		//====== 3 country postman ======
+			//乡村邮差
+			//8:1,1:4  鸡蛋，墨囊，甘蔗
 			profession = new JsonProfession();
 			profession.id = 3;
 			//鸡蛋
@@ -142,7 +147,74 @@ public class JsonDataManager {
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,1,0"}, "minecraft,reeds,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,reeds,4,0"));
 			//交易获取信封和降级卷轴
-			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,mail,1,0"}));
+			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,invitation,1,0"}));
+			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,1,0"}, new String[]{"villagebox,reset_scroll,1,0"}));
+
+			profession.upgradeProfessionIDs = new int[]{11, 12, 13, 14, 15, 16};
+			profession.upgradeRequirements = new String[]{"minecraft,book,1,0"};
+			profession.holdItems = new String[]{"villagebox,mail,1,0"};
+			profession.texture = "villagePostman";
+			profession.name = "villagePostman";
+			data.professions.add(profession);
+
+		//====== 4 city postman ======
+			profession = new JsonProfession();
+			profession.id = 4;
+			//鸡蛋
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,egg,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,egg,4,0"));
+			//墨囊
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,dye,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,dye,4,0"));
+			//甘蔗
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,1,0"}, "minecraft,reeds,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,reeds,4,0"));
+			//交易获取信封和降级卷轴
+			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,invitation,1,0"}));
+			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,1,0"}, new String[]{"villagebox,reset_scroll,1,0"}));
+			profession.upgradeProfessionIDs = new int[]{21, 22, 23, 24,25};
+			profession.upgradeRequirements = new String[]{"minecraft,book,1,0"};
+			profession.holdItems = new String[]{"villagebox,mail,1,0"};
+			profession.texture = "cityPostman";
+			profession.name = "cityPostman";
+			data.professions.add(profession);
+
+		//====== 5 shadow postman ======
+			profession = new JsonProfession();
+			profession.id = 5;
+			//鸡蛋
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,egg,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,egg,4,0"));
+			//墨囊
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,dye,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,dye,4,0"));
+			//甘蔗
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,1,0"}, "minecraft,reeds,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,reeds,4,0"));
+			//交易获取信封和降级卷轴
+			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,invitation,1,0"}));
+			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,1,0"}, new String[]{"villagebox,reset_scroll,1,0"}));
+			profession.upgradeProfessionIDs = new int[]{31, 32, 33};
+			profession.upgradeRequirements = new String[]{"minecraft,book,1,0"};
+			profession.holdItems = new String[]{"villagebox,mail,1,0"};
+			profession.texture = "shadowPostman";
+			profession.name = "shadowPostman";
+			data.professions.add(profession);
+
+		//====== 6 holy postman ======
+			profession = new JsonProfession();
+			profession.id = 6;
+			//鸡蛋
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,egg,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,egg,4,0"));
+			//墨囊
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,dye,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,dye,4,0"));
+			//甘蔗
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,1,0"}, "minecraft,reeds,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,reeds,4,0"));
+			//交易获取信封和降级卷轴
+			profession.quests.add(new JsonQuest(new String[]{"minecraft,bread,1,0"}, new String[]{"villagebox,invitation,1,0"}));
 			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,1,0"}, new String[]{"villagebox,reset_scroll,1,0"}));
 			profession.upgradeProfessionIDs = new int[]{41, 42, 43, 44 , 45 , 46 ,47 };
 			profession.upgradeRequirements = new String[]{"minecraft,book,1,0"};
@@ -244,12 +316,14 @@ public class JsonDataManager {
 			profession.id = 15;
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,4,0"}, "minecraft,cobblestone,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,cobblestone,8,0"));
-			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,granite,1,0"));
-			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,granite,4,0"));
-			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,diorite,1,0"));
-			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,diorite,4,0"));
-			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,andesite,1,0"));
-			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,andesite,4,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,stone,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,stone,4,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,stone,1,1"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,stone,4,1"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,stone,1,3"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,stone,4,3"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,bronze_coin,8,0"}, "minecraft,stone,1,5"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,stone,4,5"));
 			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,8,0"}, new String[]{"minecraft,mossy_cobblestone,1,0"}));
 			profession.quests.add(new JsonQuest(new String[]{"villagebox,silver_coin,16,0"}, new String[]{"minecraft,obsidian,8,0"}));
 			profession.upgradeRequirements = new String[]{"villagebox,silver_coin,1,0", "minecraft,golden_shovel,1,0"};
@@ -503,7 +577,7 @@ public class JsonDataManager {
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,lead,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,2,0"}, "minecraft,name_tag,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,4,0"}, "minecraft,saddle,1,0"));
-			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,8,0"}, "minecraft,iron_horse_armor ,1,0"));
+			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,8,0"}, "minecraft,iron_horse_armor,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"minecraft,saddle,1,0"}, "villagebox,silver_coin,32,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,4,0"}, "minecraft,golden_carrot,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,4,0"}, "minecraft,golden_apple,1,0"));
@@ -585,7 +659,7 @@ public class JsonDataManager {
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,10,0", "villagebox,light_shard,2,0", "villagebox,diamond_sword,1,0"}, "villagebox,light_sword,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,10,0", "villagebox,dark_shard,2,0", "villagebox,diamond_sword,1,0"}, "villagebox,dark_sword,1,0"));
 
-			profession.upgradeRequirements = new String[]{"minecraft,gold_ingot ,1,0", "villagebox,silver_coin,32,0"};
+			profession.upgradeRequirements = new String[]{"minecraft,gold_ingot,1,0", "villagebox,silver_coin,32,0"};
 			profession.holdItems = new String[]{"villagebox,fire_sword,1,0", "villagebox,nature_sword,1,0"};
 			profession.texture = "weaponsmith";
 			profession.name = "weaponsmith";
@@ -601,7 +675,7 @@ public class JsonDataManager {
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,10,0", "villagebox,staff,1,0", "villagebox,light_shard,2,0"}, "villagebox,light_staff,1,0"));
 			profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,10,0", "villagebox,staff,1,0", "villagebox,dark_shard,2,0"}, "villagebox,dark_staff,1,0"));
 			profession.quests.add(new JsonQuest(new String[]{"minecraft,stick,16,0"}, new String[]{"villagebox,bronze_coin,8,0"}));
-			profession.upgradeRequirements = new String[]{"minecraft,stick,1,0", "villagebox,silver_coin,32,0"};
+			profession.upgradeRequirements = new String[]{"minecraft,stick,64,0", "villagebox,silver_coin,32,0"};
 			profession.holdItems = new String[]{"villagebox,staff,1,0"};
 			profession.texture = "staffcrafter";
 			profession.name = "staffcrafter";

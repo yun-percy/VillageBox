@@ -37,14 +37,14 @@ villagebox:profession.carpetmaker.name=地毯制作师
 villagebox:profession.carpetmaker.desc=制作地毯
 villagebox:profession.builder.name=建筑师
 villagebox:profession.builder.desc=帮助快速建房
-villagebox:profession.ShadowMiner.name=暗影矿工
-villagebox:profession.ShadowMiner.desc=出售下界和地狱的矿物
+villagebox:profession.shadowMiner.name=暗影矿工
+villagebox:profession.shadowMiner.desc=出售下界和地狱的矿物
 villagebox:profession.miner.name=矿工
 villagebox:profession.miner.desc=挖掘基础矿物
 villagebox:profession.bowmaker.name=制弓师
 villagebox:profession.bowmaker.desc=制作高级弓
-villagebox:profession.furnituremaker.name=家具制作师
-villagebox:profession.furnituremaker.desc=制作家具
+villagebox:profession.villager.name=村民
+villagebox:profession.villager.desc=村民
 villagebox:profession.carpetmakeradv.name=高级地毯制作师
 villagebox:profession.carpetmakeradv.desc=制作更好的地毯
 villagebox:profession.carpetmakercartoony.name=卡通地毯制作师
@@ -75,6 +75,8 @@ villagebox:profession.chefdessert.name=甜点师
 villagebox:profession.chefdessert.desc=精心准备可口的甜品
 villagebox:profession.caveman.name=穴居人
 villagebox:profession.caveman.desc=住在洞穴里
+villagebox:profession.shadowBuilder.name=暗影建筑师
+villagebox:profession.shadowBuilder.desc=暗影建筑师
 
 # Gui
 villagebox:gui.villagermain.menu.upgrade=> 升级
