@@ -17,12 +17,12 @@ import net.minecraft.world.World;
 public class BlockBuildBox extends Block{
 
 	public static enum BuildSize{
-		
-		ExLarge("buildboxExLarge",5, 5),
-		Large("buildboxLarge",4, 5),
-		Medium("buildboxMedium",3, 4),
-		Small("buildboxSmall",2, 4);
-		
+
+		ExLarge("buildboxExLarge",5, 7),
+		Large("buildboxLarge",4, 7),
+		Medium("buildboxMedium",3, 6),
+		Small("buildboxSmall",2, 6);
+
 		public final String name;
 		public final int radius;
 		public final int height;
@@ -32,9 +32,9 @@ public class BlockBuildBox extends Block{
 			this.height = height;
 		}
 	}
-	
+
 	private BuildSize size;
-	
+
 	public BlockBuildBox(BuildSize size) {
 		super(Material.WOOD);
 		this.size = size;
@@ -43,39 +43,39 @@ public class BlockBuildBox extends Block{
 		this.setCreativeTab(ModItems.tabVB);
         this.setSoundType(SoundType.WOOD);
 	}
-	
+
 	@Override
 	public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn,
 			EnumHand hand, ItemStack heldItem, EnumFacing side, float hitX, float hitY, float hitZ) {
-		
+
 		if(!worldIn.isRemote){
 			//remove buildbox
 			worldIn.setBlockToAir(pos);
-			
+
 			build(worldIn, pos, false);
 		}
-		
+
 		return true;
 	}
-	
+
 	private void build(World world, BlockPos pos, boolean removeOld){
-		
+
 		int xmin = pos.getX() - size.radius - 1;
 		int xmax = pos.getX() + size.radius + 1;
 		int zmin = pos.getZ() - size.radius - 1;
 		int zmax = pos.getZ() + size.radius + 1;
 		int ymin = pos.getY() - 1;
 		int ymax = pos.getY() - 1 + size.height;
-		
-		IBlockState bsp = Blocks.PLANKS.getDefaultState();
+
+		IBlockState bsp = Blocks.QUARTZ_BLOCK.getDefaultState();
 		IBlockState bss = Blocks.STONEBRICK.getDefaultState();
 		IBlockState bsw = Blocks.GLASS_PANE.getDefaultState();
 //		BlockPlanks.EnumType ptRoof = BlockPlanks.EnumType.DARK_OAK;
 //		BlockPlanks.EnumType ptWall = BlockPlanks.EnumType.BIRCH;
 //		BlockPlanks.EnumType ptFloor = BlockPlanks.EnumType.OAK;
-		
+
 		int flags = 1|2;
-		
+
 		for(int x = xmin;x <= xmax; x++){
 			for(int z = zmin; z <= zmax; z++){
 				for(int y = ymin; y <= ymax; y++){
@@ -100,10 +100,10 @@ public class BlockBuildBox extends Block{
 							if(world.isAirBlock(new BlockPos(x,y,z)) || removeOld) world.setBlockState(new BlockPos(x,y,z),bsp);
 						}
 					}
-					
+
 				}
 			}
 		}
-		
+
 	}
 }
