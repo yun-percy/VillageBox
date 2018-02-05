@@ -268,6 +268,7 @@ tile.villagebox:buildboxSmall.name=建筑盒子 (§a小型§f)
 tile.villagebox:buildboxMedium.name=建筑盒子 (§b中型§f)
 tile.villagebox:buildboxLarge.name=建筑盒子 (§c大型§f)
 tile.villagebox:buildboxExLarge.name=建筑盒子 (§d超大型§f)
+tile.villagebox:buildboxFarm.name=农业盒子(§a9x9§f)
 tile.villagebox:carpet0.name=小鱼群地毯
 tile.villagebox:carpet1.name=香蕉幻想地毯
 tile.villagebox:carpet2.name=大棕熊地毯

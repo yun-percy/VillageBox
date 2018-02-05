@@ -14,6 +14,8 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.block.BlockStairs;
+import net.minecraft.block.BlockDoor;
+import net.minecraft.block.BlockDoor.EnumHingePosition;
 
 public class BlockBuildBox extends Block{
 
@@ -22,7 +24,8 @@ public class BlockBuildBox extends Block{
         ExLarge("buildboxExLarge",5, 7),
         Large("buildboxLarge",4, 7),
         Medium("buildboxMedium",3, 6),
-        Small("buildboxSmall",2, 6);
+        Small("buildboxSmall",2, 6),
+        Farm("buildboxFarm",4,10);
 
         public final String name;
         public final int radius;
@@ -70,14 +73,23 @@ public class BlockBuildBox extends Block{
         int yroof = pos.getY() + size.height -1;
 
         IBlockState bsp = Blocks.QUARTZ_BLOCK.getDefaultState();
+        IBlockState bsp_wall = Blocks.QUARTZ_BLOCK.getStateFromMeta(1);
+        IBlockState bsp_pillar = Blocks.QUARTZ_BLOCK.getStateFromMeta(2);
         IBlockState bsf = Blocks.WOODEN_SLAB.getDefaultState();
         IBlockState quartzSlab = Blocks.STONE_SLAB.getStateFromMeta(7);
         IBlockState bss = Blocks.STONEBRICK.getDefaultState();
         IBlockState bsw = Blocks.GLASS_PANE.getDefaultState();
+        IBlockState glass = Blocks.GLASS.getDefaultState();
         IBlockState bsr = Blocks.BRICK_BLOCK.getDefaultState();
         IBlockState bs_light = Blocks.GLOWSTONE.getDefaultState();
         IBlockState bs_door = Blocks.ACACIA_DOOR.getDefaultState();
         IBlockState brickStairs = Blocks.BRICK_STAIRS.getDefaultState();
+        IBlockState oak_door = Blocks.ACACIA_DOOR.getDefaultState().withProperty(BlockDoor.FACING, EnumFacing.NORTH).withProperty(BlockDoor.OPEN, Boolean.valueOf(false)).withProperty(BlockDoor.HINGE, BlockDoor.EnumHingePosition.LEFT).withProperty(BlockDoor.POWERED, Boolean.valueOf(false)).withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.LOWER);
+        IBlockState smooth_granite = Blocks.STONE.getStateFromMeta(2);
+        IBlockState smooth_diorite = Blocks.STONE.getStateFromMeta(4);
+        IBlockState smooth_andesite = Blocks.STONE.getStateFromMeta(6);
+        IBlockState grass = Blocks.GRASS.getDefaultState();
+        IBlockState water = Blocks.WATER.getDefaultState();
         //IBlockState brickStairs = Blocks.BRICK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST);
 
         //		BlockPlanks.EnumType ptRoof = BlockPlanks.EnumType.DARK_OAK;
@@ -85,58 +97,97 @@ public class BlockBuildBox extends Block{
         //		BlockPlanks.EnumType ptFloor = BlockPlanks.EnumType.OAK;
 
         int flags = 1|2;
-
-        for(int x = xmin;x <= xmax; x++){
-            for(int z = zmin; z <= zmax; z++){
-                for(int y = ymin; y <= ymax; y++){
-                    if(y == ymin){//floor
-                        if(x==xmin ||x==xmax||z==zmin||z==zmax){
-                            world.setBlockState(new BlockPos(x,y,z),bss);
-                        }else{
-                            world.setBlockState(new BlockPos(x,y,z),quartzSlab);
-                        }
-                        //if(world.isAirBlock(new BlockPos(x,y,z)) || removeOld) world.setBlockState(new BlockPos(x,y,z), bsf);
-                    }
-                    else if(y >= yroof){//roof
-                        int roof_layer=y-yroof;
-                        if((  (x==xmin+roof_layer || x==xmax-roof_layer) && (z>=zmin+roof_layer && z<=zmax-roof_layer) ) || ((z==zmin+roof_layer||z==zmax-roof_layer) && (x>=xmin+roof_layer && x<=xmax-roof_layer))){
-                            if(x==xmin+roof_layer){
-                                world.setBlockState(new BlockPos(x,y,z),brickStairs.withProperty(BlockStairs.FACING, EnumFacing.EAST));
-                            }else if (x==xmax-roof_layer){
-                                world.setBlockState(new BlockPos(x,y,z),brickStairs.withProperty(BlockStairs.FACING, EnumFacing.WEST));
-                            }else if (z==zmax-roof_layer){
-                                world.setBlockState(new BlockPos(x,y,z),brickStairs.withProperty(BlockStairs.FACING, EnumFacing.NORTH));
-                            }else if (z==zmin+roof_layer){
-                                world.setBlockState(new BlockPos(x,y,z),brickStairs.withProperty(BlockStairs.FACING, EnumFacing.SOUTH));
+        if(size.name=="buildboxFarm"){
+            ymin=ymin-2;
+            for(int x = xmin;x<=xmax;x++){
+                for(int z= zmin;z<=zmax;z++){
+                    for(int y=ymin;y<=ymax;y++){
+                        if(y==ymin){//base
+                            world.setBlockState(new BlockPos(x,y,z),smooth_andesite);
+                        }else if(y==ymin+1){
+                            if(x != xmin && z != zmin && x != xmax && z != zmax ){
+                                world.setBlockState(new BlockPos(x,y,z),water);
                             }else{
-                                world.setBlockState(new BlockPos(x,y,z),bsr);
+                                world.setBlockState(new BlockPos(x,y,z),smooth_granite);
                             }
-                            if(x==pos.getX() && z==pos.getZ() && y==ymax){
-                                world.setBlockState(new BlockPos(x,y,z),bs_light);
+                        }else if(y==ymin+2){
+                            if(x != xmin && z != zmin && x != xmax && z != zmax ){
+                                world.setBlockState(new BlockPos(x,y,z),grass);
+                            }else{
+                                world.setBlockState(new BlockPos(x,y,z),smooth_granite);
                             }
-                        }else if(x==pos.getX() && z==pos.getZ() && y==ymax-1){
-                            world.setBlockState(new BlockPos(x,y,z),bs_light);
-                        }else{
-                            world.setBlockToAir(new BlockPos(x,y,z));
+                        }else if(y==ymax){
+                            if(x != xmin && z != zmin && x != xmax && z != zmax ){
+                                world.setBlockState(new BlockPos(x,y,z),glass);
+                            }else{
+                                world.setBlockState(new BlockPos(x,y,z),smooth_granite);
+                            }
+                        }else if((x==xmin && z==zmin) || (x==xmin && z==zmax) || (x==xmax && z==zmin) || (x==xmax && z==zmax)){
+                           if(y==ymax/2){
+                               world.setBlockState(new BlockPos(x,y,z),bs_light);
+                           }else{
+                               world.setBlockState(new BlockPos(x,y,z),smooth_andesite);
+                           }
                         }
+
                     }
-                    else if(x != xmin && z != zmin && x != xmax && z != zmax && y<=yroof){//empty space
-                        if(world.isAirBlock(new BlockPos(x,y,z)) || removeOld) world.setBlockToAir(new BlockPos(x,y,z));
-                    }
-                    else{//wall
-                        if((x==xmin && z==zmin) || (x==xmin && z==zmax) || (x==xmax && z==zmin) || (x==xmax && z==zmax)){
-                            System.out.println("x:" + x+",y:"+y+",z:"+z);
-                            world.setBlockState(new BlockPos(x,y,z),bsp);
-                        }else if(x==xmax && (z>=zmin || z<=zmax)){
-                            if(z==pos.getZ() && (y==ymin+1||y==ymin+2)){
-                                if(y==ymin+1){
-                                    world.setBlockState(new BlockPos(x,y,z),bs_door);
+                }
+            }
+        }else {
+            for(int x = xmin;x <= xmax; x++){
+                for(int z = zmin; z <= zmax; z++){
+                    for(int y = ymin; y <= ymax; y++){
+                        if(y == ymin){//floor
+                            if(x==xmin ||x==xmax||z==zmin||z==zmax){
+                                world.setBlockState(new BlockPos(x,y,z),bss);
+                            }else{
+                                world.setBlockState(new BlockPos(x,y,z),quartzSlab);
+                            }
+                            //if(world.isAirBlock(new BlockPos(x,y,z)) || removeOld) world.setBlockState(new BlockPos(x,y,z), bsf);
+                        }
+                        else if(y >= yroof){//roof
+                            int roof_layer=y-yroof;
+                            if((  (x==xmin+roof_layer || x==xmax-roof_layer) && (z>=zmin+roof_layer && z<=zmax-roof_layer) ) || ((z==zmin+roof_layer||z==zmax-roof_layer) && (x>=xmin+roof_layer && x<=xmax-roof_layer))){
+                                if(x==xmin+roof_layer){
+                                    world.setBlockState(new BlockPos(x,y,z),brickStairs.withProperty(BlockStairs.FACING, EnumFacing.EAST));
+                                }else if (x==xmax-roof_layer){
+                                    world.setBlockState(new BlockPos(x,y,z),brickStairs.withProperty(BlockStairs.FACING, EnumFacing.WEST)); }else if (z==zmax-roof_layer){ world.setBlockState(new BlockPos(x,y,z),brickStairs.withProperty(BlockStairs.FACING, EnumFacing.NORTH));
+                                }else if (z==zmin+roof_layer){
+                                    world.setBlockState(new BlockPos(x,y,z),brickStairs.withProperty(BlockStairs.FACING, EnumFacing.SOUTH));
+                                }else{
+                                    world.setBlockState(new BlockPos(x,y,z),bsr);
+                                }
+                                if(x==pos.getX() && z==pos.getZ() && y==ymax){
+                                    world.setBlockState(new BlockPos(x,y,z),bs_light);
+                                }
+                            }else if(x==pos.getX() && z==pos.getZ() && y==ymax-1){
+                                world.setBlockState(new BlockPos(x,y,z),bs_light);
+                            }else{
+                                world.setBlockToAir(new BlockPos(x,y,z));
+                            }
+                        }
+                        else if(x != xmin && z != zmin && x != xmax && z != zmax && y<=yroof){//empty space
+                            if(world.isAirBlock(new BlockPos(x,y,z)) || removeOld) world.setBlockToAir(new BlockPos(x,y,z));
+                        }
+                        else{//wall
+                            if((x==xmin && z==zmin) || (x==xmin && z==zmax) || (x==xmax && z==zmin) || (x==xmax && z==zmax)){
+                                System.out.println("x:" + x+",y:"+y+",z:"+z);
+                                world.setBlockState(new BlockPos(x,y,z),bsp_pillar);
+                            }else if(x==xmax ){
+                                if(z==pos.getZ() && (y==ymin+1||y==ymin+2)){
+                                    if(y==ymin+2){
+                                        world.setBlockState(new BlockPos(x,y,z),oak_door.withProperty(BlockDoor.FACING, EnumFacing.WEST).withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.UPPER));
+                                    }else{
+                                        world.setBlockState(new BlockPos(x,y,z),oak_door.withProperty(BlockDoor.FACING, EnumFacing.NORTH).withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.LOWER));
+                                    }
+
+                                        //world.setBlockState(new BlockPos(x,y,z),bs_door.withProperty(BlockDoor.FACING, EnumFacing.EAST).withProperty(BlockDoor.HINGE, EnumHingePosition.LEFT));
+                                }else{
+                                    world.setBlockState(new BlockPos(x,y,z),bsp_wall);
                                 }
                             }else{
-                                world.setBlockState(new BlockPos(x,y,z),bsp);
+                                world.setBlockState(new BlockPos(x,y,z),bsw);
                             }
-                        }else{
-                            world.setBlockState(new BlockPos(x,y,z),bsw);
                         }
                     }
                 }
