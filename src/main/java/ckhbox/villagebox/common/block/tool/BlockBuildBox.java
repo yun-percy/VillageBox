@@ -25,7 +25,8 @@ public class BlockBuildBox extends Block{
         Large("buildboxLarge",4, 7),
         Medium("buildboxMedium",3, 6),
         Small("buildboxSmall",2, 6),
-        Farm("buildboxFarm",4,10);
+        Farm("buildboxFarm",4,10),
+        Sword("buildboxSword",6,80);
 
         public final String name;
         public final int radius;
@@ -85,11 +86,16 @@ public class BlockBuildBox extends Block{
         IBlockState bs_door = Blocks.ACACIA_DOOR.getDefaultState();
         IBlockState brickStairs = Blocks.BRICK_STAIRS.getDefaultState();
         IBlockState oak_door = Blocks.ACACIA_DOOR.getDefaultState().withProperty(BlockDoor.FACING, EnumFacing.NORTH).withProperty(BlockDoor.OPEN, Boolean.valueOf(false)).withProperty(BlockDoor.HINGE, BlockDoor.EnumHingePosition.LEFT).withProperty(BlockDoor.POWERED, Boolean.valueOf(false)).withProperty(BlockDoor.HALF, BlockDoor.EnumDoorHalf.LOWER);
+        IBlockState stone = Blocks.STONE.getStateFromMeta(0);
         IBlockState smooth_granite = Blocks.STONE.getStateFromMeta(2);
         IBlockState smooth_diorite = Blocks.STONE.getStateFromMeta(4);
         IBlockState smooth_andesite = Blocks.STONE.getStateFromMeta(6);
         IBlockState grass = Blocks.GRASS.getDefaultState();
         IBlockState water = Blocks.WATER.getDefaultState();
+        IBlockState lava = Blocks.LAVA.getDefaultState();
+        IBlockState magma = Blocks.MAGMA.getDefaultState();
+        IBlockState lapis_block = Blocks.LAPIS_BLOCK.getDefaultState();
+        IBlockState gold_block = Blocks.GOLD_BLOCK.getDefaultState();
         //IBlockState brickStairs = Blocks.BRICK_STAIRS.getDefaultState().withProperty(BlockStairs.FACING, EnumFacing.EAST);
 
         //		BlockPlanks.EnumType ptRoof = BlockPlanks.EnumType.DARK_OAK;
@@ -130,6 +136,63 @@ public class BlockBuildBox extends Block{
                            }
                         }
 
+                    }
+                }
+            }
+        }else if(size.name=="buildboxSword"){
+            int lmin=pos.getX()-3;
+            int lmax=pos.getX()+3;
+            int wmin=pos.getZ()-1;
+            int wmax=pos.getZ()+1;
+            for(int x = xmin;x <= xmax; x++){
+                for(int z = zmin; z <= zmax; z++){
+                    for(int y = ymin; y <= ymax; y++){
+                        if(y == ymin){//floor
+                            if(x != xmin && z != zmin && x != xmax && z != zmax ){
+                                world.setBlockState(new BlockPos(x,y,z),lava);
+                            }else if(z==pos.getZ()&& (x>=lmin||x<=lmax)){
+                                world.setBlockState(new BlockPos(x,y,z),stone);
+                            }else{
+                                world.setBlockState(new BlockPos(x,y,z),smooth_granite);
+                            }
+                        }else if(y<=ymin+59){
+                            if(z==pos.getZ()&& (x>=lmin && x<=lmax)){
+                                world.setBlockState(new BlockPos(x,y,z),stone);
+                            }
+                            if(y==ymin+9&&(z==wmin||z==wmax)&& x==pos.getX()){
+                                world.setBlockState(new BlockPos(x,y,z),magma);
+                            }
+                            if((y>ymin+9 && y<=ymin+59) &&(z==wmin||z==wmax) && (x>=pos.getX()-1 && x<=pos.getX()+1)){
+                                world.setBlockState(new BlockPos(x,y,z),magma);
+                            }
+                        }else if(y<=ymin+62){
+                            if((z>=wmin && z<=wmax)&& (x>=pos.getX()-1 && x<=pos.getX()+1)){
+                                world.setBlockState(new BlockPos(x,y,z),bs_light);
+                            }else if(z==pos.getZ()){
+                                if(x==xmin){
+                                    world.setBlockState(new BlockPos(x-1,y,z),lapis_block);
+                                    world.setBlockState(new BlockPos(x-2,y,z),lapis_block);
+                                    world.setBlockState(new BlockPos(x-3,y,z),lapis_block);
+                                }else if(x==xmax){
+                                    world.setBlockState(new BlockPos(x+1,y,z),lapis_block);
+                                    world.setBlockState(new BlockPos(x+2,y,z),lapis_block);
+                                    world.setBlockState(new BlockPos(x+3,y,z),lapis_block);
+                                }
+                                world.setBlockState(new BlockPos(x,y,z),lapis_block);
+                                if(y!=ymin+60 && ((x>=xmin && x<=lmin) ||(x<=xmax && x>=lmax))){
+                                    world.setBlockToAir(new BlockPos(x,y,z));
+                                }
+
+                            }
+                        }else if(y<=ymin+70){
+                            if((z>=wmin && z<=wmax)&& (x>=pos.getX()-1 && x<=pos.getX()+1)){
+                                world.setBlockState(new BlockPos(x,y,z),gold_block);
+                            }
+                        }else if(y<=ymin+72){
+                            if((z>=wmin && z<=wmax)&& (x>=lmin && x<=lmax )){
+                                world.setBlockState(new BlockPos(x,y,z),bs_light);
+                            }
+                        }
                     }
                 }
             }

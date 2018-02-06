@@ -31,6 +31,7 @@ public class ModBlocks {
     public static BlockBuildBox buildboxLarge;
     public static BlockBuildBox buildboxExLarge;
     public static BlockBuildBox buildboxFarm;
+    public static BlockBuildBox buildboxSword;
 
     public static BlockTable tableOak;
     public static BlockTable tableJungle;
@@ -130,6 +131,7 @@ public class ModBlocks {
         register(buildboxLarge=new BlockBuildBox(BlockBuildBox.BuildSize.Large),"buildbox_large");
         register(buildboxExLarge=new BlockBuildBox(BlockBuildBox.BuildSize.ExLarge),"buildbox_exlarge");
         register(buildboxFarm=new BlockBuildBox(BlockBuildBox.BuildSize.Farm),"buildbox_farm");
+        register(buildboxSword=new BlockBuildBox(BlockBuildBox.BuildSize.Sword),"buildbox_sword");
 
         //tables
         register(tableOak=new BlockTable("tableOak"),"table_oak");

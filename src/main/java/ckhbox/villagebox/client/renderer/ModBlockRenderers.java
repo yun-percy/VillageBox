@@ -19,7 +19,8 @@ public class ModBlockRenderers {
         registerModel(ModBlocks.buildboxMedium, 0, "buildbox_medium");
         registerModel(ModBlocks.buildboxLarge, 0, "buildbox_large");
         registerModel(ModBlocks.buildboxExLarge, 0, "buildbox_exlarge");
-        registerModel(ModBlocks.buildboxFarm,0,"buildbox_exlarge");
+        registerModel(ModBlocks.buildboxFarm,0,"buildbox_farm");
+        registerModel(ModBlocks.buildboxSword,0,"buildbox_sword");
 
         registerModel(ModBlocks.fireTotem, 0, "fire_totem");
         registerModel(ModBlocks.waterTotem, 0, "water_totem");
