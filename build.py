@@ -5,7 +5,6 @@ import sys
 import os
 import ConfigParser
 import commands
-
 conf_ini="config.ini"
 cf = ConfigParser.ConfigParser()
 cf.read(conf_ini)
@@ -33,7 +32,7 @@ def build_libs():
         os.rename(origin_name,os.path.join("build","libs",output_name))
     else:
         print output
-        raise exception("build Faile!")
+        raise Exception("build Faile!")
 
 def run_client():
     cmd="./gradlew runClient --offline"
@@ -42,8 +41,12 @@ def run_client():
 if not os.path.isdir(".gradle"):
     init_env()
 
+if len(sys.argv)>1:
+    if sys.argv[1]=="run":
+        print "starting simle client...."
+        run_client()
+        sys.exit(0)
 build_libs()
-run_client()
 
 
 cf.set("version", "build_version", build_version+1)

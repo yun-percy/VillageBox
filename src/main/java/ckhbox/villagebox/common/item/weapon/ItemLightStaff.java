@@ -23,32 +23,32 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
 public class ItemLightStaff extends Item
-{		
-	public ItemLightStaff()
+{
+    public ItemLightStaff()
     {
-		this.setUnlocalizedName(PathHelper.full("lightStaff"));
+        this.setUnlocalizedName(PathHelper.full("lightStaff"));
         this.maxStackSize = 1;
-        this.setMaxDamage(256);
+        this.setMaxDamage(2048);
         this.setCreativeTab(ModItems.tabVB);
     }
-    
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-		super.addInformation(stack, playerIn, tooltip, advanced);
-		String info = I18n.format(PathHelper.full("info.item.lightStaff"));
-		tooltip.add(info);
-	}
-    
-	@Override
-	public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, playerIn, tooltip, advanced);
+        String info = I18n.format(PathHelper.full("info.item.lightStaff"));
+        tooltip.add(info);
+    }
+
+    @Override
+    public EnumActionResult onItemUse(ItemStack stack, EntityPlayer playerIn, World worldIn, BlockPos pos, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ)
     {
         Item itemTorch = Item.getItemFromBlock(Blocks.TORCH);
         if(!(itemTorch instanceof ItemBlock)){
-        	return EnumActionResult.FAIL;
+            return EnumActionResult.FAIL;
         }
-		
+
         ItemBlock itemBlockTorch = (ItemBlock)itemTorch;
-		
+
         IBlockState iblockstate = worldIn.getBlockState(pos);
         Block block = iblockstate.getBlock();
 
@@ -61,7 +61,7 @@ public class ItemLightStaff extends Item
         {
             int i = this.getMetadata(stack.getMetadata());
             IBlockState iblockstate1 = Blocks.TORCH.onBlockPlaced(worldIn, pos, facing, hitX, hitY, hitZ, i, playerIn);
-            
+
             if (itemBlockTorch.placeBlockAt(stack, playerIn, worldIn, pos, facing, hitX, hitY, hitZ, iblockstate1))
             {
                 SoundType soundtype = Blocks.TORCH.getSoundType();
@@ -76,14 +76,14 @@ public class ItemLightStaff extends Item
             return EnumActionResult.FAIL;
         }
     }
-	 
-	public void damageStaff(EntityPlayer player, ItemStack stack, EnumHand hand){
+
+    public void damageStaff(EntityPlayer player, ItemStack stack, EnumHand hand){
         if (!player.capabilities.isCreativeMode)
         {
-        	stack.damageItem(1, player);
-        	if(stack.getItemDamage() == 0){
-        		player.setItemStackToSlot(hand == EnumHand.MAIN_HAND? EntityEquipmentSlot.MAINHAND : EntityEquipmentSlot.OFFHAND, new ItemStack(ModItems.staff));
-        	}
+            stack.damageItem(1, player);
+            if(stack.getItemDamage() == 0){
+                player.setItemStackToSlot(hand == EnumHand.MAIN_HAND? EntityEquipmentSlot.MAINHAND : EntityEquipmentSlot.OFFHAND, new ItemStack(ModItems.staff));
+            }
         }
-	 }
+    }
 }

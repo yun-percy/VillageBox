@@ -8,13 +8,13 @@ import net.minecraft.util.ITickable;
 
 public class TileEntityFireTotem extends TileEntityTotem{
 
-	@Override
-	protected void updateTotonEffect() {				
-		List<EntityMob> list = this.worldObj.getEntitiesWithinAABB(EntityMob.class, this.getEffectField(16, 10));
-		if(list != null){
-			for(EntityMob mob : list){
-				mob.setFire(4);
-			}
-		}
-	}
+    @Override
+    protected void updateTotonEffect() {
+        List<EntityMob> list = this.worldObj.getEntitiesWithinAABB(EntityMob.class, this.getEffectField(64, 64));
+        if(list != null){
+            for(EntityMob mob : list){
+                mob.setFire(10);
+            }
+        }
+    }
 }
