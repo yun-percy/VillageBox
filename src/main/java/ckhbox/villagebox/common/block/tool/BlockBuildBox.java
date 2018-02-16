@@ -105,6 +105,7 @@ public class BlockBuildBox extends Block{
         int flags = 1|2;
         if(size.name=="buildboxFarm"){
             ymin=ymin-2;
+            ymax=pos.getY() + size.height -1;
             for(int x = xmin;x<=xmax;x++){
                 for(int z= zmin;z<=zmax;z++){
                     for(int y=ymin;y<=ymax;y++){
@@ -129,11 +130,13 @@ public class BlockBuildBox extends Block{
                                 world.setBlockState(new BlockPos(x,y,z),smooth_granite);
                             }
                         }else if((x==xmin && z==zmin) || (x==xmin && z==zmax) || (x==xmax && z==zmin) || (x==xmax && z==zmax)){
-                           if(y==ymax/2){
+                           if(y==pos.getY()+size.height/2){
                                world.setBlockState(new BlockPos(x,y,z),bs_light);
                            }else{
                                world.setBlockState(new BlockPos(x,y,z),smooth_andesite);
                            }
+                        }else{
+                        	world.setBlockToAir(new BlockPos(x,y,z));
                         }
 
                     }
@@ -192,6 +195,8 @@ public class BlockBuildBox extends Block{
                             if((z>=wmin && z<=wmax)&& (x>=lmin && x<=lmax )){
                                 world.setBlockState(new BlockPos(x,y,z),bs_light);
                             }
+                        }else{
+                        	world.setBlockToAir(new BlockPos(x,y,z));
                         }
                     }
                 }
