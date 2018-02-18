@@ -19,42 +19,51 @@ import net.minecraftforge.event.world.BlockEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventCoinsFound {
-	
-	private void dropCoins(int num, World world, double x, double y, double z){
-		
-		while(num > 0){
-			int count = num > 64? 64:num;
-			num -= count;
-			EntityItem entityitem = new EntityItem(world, x, y + 0.5F, z, new ItemStack(ModItems.bronzeCoin,count));
+
+	private void dropCoins(int num,int treasureHuntLevel, World world, double x, double y, double z){
+
+		if(num > 0){
+			int count = num > 64? 64:num;//the max num is 64
+			treasureHuntLevel=treasureHuntLevel==0?1:treasureHuntLevel;
+			int coinTypeChance=Rand.get().nextInt(1*2*3*4/treasureHuntLevel);
+			ItemStack coinType = new ItemStack(ModItems.bronzeCoin,count);
+			if (coinTypeChance==23){
+				coinType = new ItemStack(ModItems.goldCoin,1);
+			}else if (coinTypeChance>20){
+				coinType = new ItemStack(ModItems.silverCoin,1);
+			}
+			EntityItem entityitem = new EntityItem(world, x, y + 0.5F, z, coinType);
 			entityitem.setDefaultPickupDelay();
 			world.spawnEntityInWorld(entityitem);
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onLivingDeath(LivingDeathEvent event)
 	{
-		if(!event.getEntityLiving().worldObj.isRemote && 
-			event.getEntityLiving() instanceof EntityMob && 
+		if(!event.getEntityLiving().worldObj.isRemote &&
+			event.getEntityLiving() instanceof EntityMob &&
 			event.getSource().getSourceOfDamage() instanceof EntityPlayer){
 			if(VBConfig.killMobsDropCoins){
 				int l =  ExtendedPlayerProperties.get((EntityPlayer)event.getSource().getSourceOfDamage()).treasureHuntLevel;
-				int base = l * 2 + 1;
-				int add = l + 3;
-				dropCoins(Rand.get().nextInt(add) + base,event.getEntityLiving().worldObj, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ);
+				int base = l * 3 + Rand.get().nextInt(3);
+				int add = l * 5;
+				int coinNum= Rand.get().nextInt(add) + base;
+				dropCoins(coinNum,l,event.getEntityLiving().worldObj, event.getEntityLiving().posX, event.getEntityLiving().posY, event.getEntityLiving().posZ);
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	public void onBlockHarvest(BlockEvent.HarvestDropsEvent event)
 	{
 		if(!event.getWorld().isRemote && event.getHarvester() != null){
 			if(Rand.get().nextInt(5) == 0 && VBConfig.destroyBlocksDropCoins){
 				int l =  ExtendedPlayerProperties.get(event.getHarvester()).treasureHuntLevel;
-				int base = l + 1;
-				int add = l * 2;
-				dropCoins(Rand.get().nextInt(3),event.getWorld(), event.getPos().getX() + 0.5D, event.getPos().getY() + 0.5D, event.getPos().getZ() + 0.5D);
+				int base = l * 2 + Rand.get().nextInt(3);
+				int add = l * 3;
+				int coinNum= Rand.get().nextInt(add) + base;
+				dropCoins(coinNum,l,event.getWorld(), event.getPos().getX() + 0.5D, event.getPos().getY() + 0.5D, event.getPos().getZ() + 0.5D);
 			}
 		}
 	}
