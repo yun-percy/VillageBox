@@ -25,11 +25,15 @@ public class EventCoinsFound {
 		if(num > 0){
 			int count = num > 64? 64:num;//the max num is 64
 			treasureHuntLevel=treasureHuntLevel==0?1:treasureHuntLevel;
-			int coinTypeChance=Rand.get().nextInt(1*2*3*4/treasureHuntLevel);
+			int coinTypeChance=Rand.get().nextInt(1*2*3*10/treasureHuntLevel);
 			ItemStack coinType = new ItemStack(ModItems.bronzeCoin,count);
-			if (coinTypeChance==23){
+			System.out.println("treasureHuntLevel:"+  treasureHuntLevel);
+			System.out.println("coinTypeChance:"+  coinTypeChance);
+			System.out.println("count:"+  count);
+			//10% gold coin,20% silver coin 70%  bronzecoin
+			if (coinTypeChance>54/treasureHuntLevel){
 				coinType = new ItemStack(ModItems.goldCoin,1);
-			}else if (coinTypeChance>20){
+			}else if (coinTypeChance>42/treasureHuntLevel){
 				coinType = new ItemStack(ModItems.silverCoin,1);
 			}
 			EntityItem entityitem = new EntityItem(world, x, y + 0.5F, z, coinType);
