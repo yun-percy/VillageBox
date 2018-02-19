@@ -13,25 +13,25 @@ import net.minecraft.client.resources.I18n;
 public class Quest {
 	private ItemStack[] required;
 	private ItemStack[] rewards;
-	
+
 	public Quest(ItemStack[] required, ItemStack[] rewards){
 		this.required = required;
 		this.rewards = rewards;
 	}
-	
+
 	public ItemStack[] getRequirements(){
 		return this.required;
 	}
-	
+
 	public ItemStack[] getRewards(){
 		return this.rewards;
 	}
-	
+
 	@SideOnly(Side.CLIENT)
 	public String getText(EntityPlayer player){
 		return I18n.format(PathHelper.full("quest.text"),player.getName());
 	}
-	
+
 	public boolean canComplete(EntityPlayer player){
 		if(required == null) return true;
 		for(int i = 0;i<required.length;i++){
@@ -41,27 +41,26 @@ public class Quest {
 		}
 		return true;
 	}
-	
+
 	public boolean complete(EntityPlayer player){
-		
+
 		if(!canComplete(player)) return false;
-		
+
 		for(int i = 0;i<required.length;i++){
 			this.consumeItems(required[i], player);
 		}
-		
+
 		if(rewards != null){
 			for(int i =0;i<rewards.length;i++){
 				ItemStack reward = rewards[i].copy();
 				if(!player.inventory.addItemStackToInventory(reward)){
 					player.dropItem(reward, false);
 				}
-			}	
+			}
 		}
-		
+
 		//exp
-		int exp = 15;
-		
+		int exp = Rand.get().nextInt(150);
 		while (exp > 0)
         {
             int i = EntityXPOrb.getXPSplit(exp);
@@ -69,10 +68,10 @@ public class Quest {
             player.worldObj.spawnEntityInWorld(new EntityXPOrb(player.worldObj, player.posX, player.posY + 0.5D, player.posZ, i));
         }
 
-		
+
 		return true;
 	}
-	
+
 	public int getItemNum(ItemStack itemstack, EntityPlayer player){
 		ItemStack[] stacks = player.inventory.mainInventory;
 		int count = 0;
@@ -85,7 +84,7 @@ public class Quest {
         }
 		return count;
 	}
-	
+
 	private void consumeItems(ItemStack itemstack, EntityPlayer player){
 		ItemStack[] stacks = player.inventory.mainInventory;
 

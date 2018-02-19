@@ -551,6 +551,7 @@ public class JsonDataManager {
         profession.id = 32;
         profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"minecraft,nether_star,1,0"}, "villagebox,gold_coin,4,0"));
         profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"minecraft,dragon_egg,1,0"}, "villagebox,gold_coin,8,0"));
+        profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,4,0"}, "minecraft,blaze_rod,1,0"));
         profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,chorus_fruit,1,0"));
         profession.tradingRecipes.add(new JsonTradingRecipe(new String[]{"villagebox,silver_coin,1,0"}, "minecraft,magma_cream,1,0"));
         profession.quests.add(new JsonQuest(new String[]{"villagebox,gold_coin,8,0"}, new String[]{"minecraft,nether_star,1,0"}));
