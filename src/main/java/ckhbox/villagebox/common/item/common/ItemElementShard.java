@@ -15,7 +15,7 @@ public class ItemElementShard extends Item{
 	public ItemElementShard(String element){
 		this.setUnlocalizedName(PathHelper.full(element + "Shard"));
 		this.setCreativeTab(ModItems.tabVB);
-		this.setMaxStackSize(16);
+		this.setMaxStackSize(64);
 	}
-	
+
 }
