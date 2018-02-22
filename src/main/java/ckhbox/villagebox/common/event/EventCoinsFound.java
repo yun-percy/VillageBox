@@ -65,8 +65,8 @@ public class EventCoinsFound {
 			if(Rand.get().nextInt(5) == 0 && VBConfig.destroyBlocksDropCoins){
 				int l =  ExtendedPlayerProperties.get(event.getHarvester()).treasureHuntLevel;
 				int base = l * 2 + Rand.get().nextInt(3);
-				int add = l * 3;
-				int coinNum= Rand.get().nextInt(add) + base;
+				int add = l * Rand.get().nextInt(4);
+				int coinNum= add + base;
 				dropCoins(coinNum,l,event.getWorld(), event.getPos().getX() + 0.5D, event.getPos().getY() + 0.5D, event.getPos().getZ() + 0.5D);
 			}
 		}

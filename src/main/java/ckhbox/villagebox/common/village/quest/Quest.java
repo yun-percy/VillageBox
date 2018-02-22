@@ -60,7 +60,7 @@ public class Quest {
 		}
 
 		//exp
-		int exp = Rand.get().nextInt(150);
+		int exp = 128;
 		while (exp > 0)
         {
             int i = EntityXPOrb.getXPSplit(exp);

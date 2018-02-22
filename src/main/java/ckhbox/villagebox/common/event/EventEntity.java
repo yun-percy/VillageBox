@@ -21,26 +21,26 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 
 public class EventEntity {
-	
+
 	@SubscribeEvent
 	public void onAttachCapability(AttachCapabilitiesEvent.Entity event){
 		if(event.getEntity() instanceof EntityPlayer){
 			event.addCapability(ExtendedPlayerProperties.key, new CapExPlayerPropertiesProvider((EntityPlayer)event.getEntity()));
 		}
 	}
-	
+
 	@SubscribeEvent
     public void livingSpawnEvent(LivingSpawnEvent event) {
-		
+
 		Class ec = event.getEntityLiving().getClass();
-		
+
 		if(ec == EntityZombie.class){
 			EntityZombie entity = (EntityZombie)event.getEntityLiving();
 			entity.targetTasks.addTask(3, new EntityAINearestAttackableTarget(entity, EntityVillager.class, true));
 		}
-		
+
     }
-	
+
 	@SubscribeEvent
 	public void onLivingUpdating(LivingUpdateEvent event)
 	{
@@ -59,24 +59,28 @@ public class EventEntity {
 		}
 
 	}
-	
+
 	@SubscribeEvent
 	public void onEntityJoinWorld(EntityJoinWorldEvent event) {
 		if (!event.getWorld().isRemote && event.getEntity() instanceof EntityPlayer) {
 			EntityPlayer player = (EntityPlayer)event.getEntity();
 
 			ExtendedPlayerProperties p = ExtendedPlayerProperties.get(player);
-			
+
 			if(!p.receivedVillagebook && !VBConfig.disableBookAtStarting){
 				ItemStack villageBook = new ItemStack(ModItems.villageBook);
+				ItemStack invitation = new ItemStack(ModItems.invitation);
 				if (!player.inventory.addItemStackToInventory(villageBook)) {
 					player.dropItem(villageBook, false);
+				}
+				if (!player.inventory.addItemStackToInventory(invitation)) {
+					player.dropItem(invitation, false);
 				}
 				p.receivedVillagebook = true;
 			}
 		}
 	}
-	
+
 	@SubscribeEvent
 	void onClone(PlayerEvent.Clone event) {
 	    NBTTagCompound temp = new NBTTagCompound();
@@ -85,7 +89,7 @@ public class EventEntity {
 	    old.saveNBTData(temp);
 	    current.loadNBTData(temp);
 	}
-	
+
 	@SubscribeEvent
 	void onItemUseTick(LivingEntityUseItemEvent.Start event){
 		if(event.getItem().getItem() == ModItems.efficientBow){
