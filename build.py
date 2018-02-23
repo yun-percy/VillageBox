@@ -15,24 +15,27 @@ fix_version = cf.getint("version","fix_version")
 build_version = cf.getint("version","build_version")
 version_name="%s.%s.%s" % (major_version,fix_version,build_version)
 output_name="%s-%s-%s.jar" % (mod_name,mc_version,version_name)
-origin_name="build/libs/sVillagebox-1.10.2-1.1.2.jar"
 print "start build"
 print "="*50
 print "Name=",mod_name
 print "version:",version_name
 print "output_name:",output_name
 print "="*50
+def export_env():
+    os.environ["VERSION_NAME"]="%s-%s" %(mc_version,version_name)
+    os.environ["BASE_NAME"]=mod_name
 def init_env():
     cmd="./gradlew setupDecompWorkspace"
     os.system(cmd)
 def build_libs():
     cmd="./gradlew build --offline"
-    status,output=commands.getstatusoutput(cmd);
-    if(status==0):
-        os.rename(origin_name,os.path.join("build","libs",output_name))
-    else:
-        print output
-        raise Exception("build Faile!")
+    os.system(cmd)
+    # status,output=commands.getstatusoutput(cmd);
+    # if(status==0):
+        # os.rename(origin_name,os.path.join("build","libs",output_name))
+    # else:
+        # print output
+        # raise Exception("build Faile!")
 
 def run_client():
     cmd="./gradlew runClient --offline"
@@ -46,6 +49,7 @@ if len(sys.argv)>1:
         print "starting simle client...."
         run_client()
         sys.exit(0)
+export_env()
 build_libs()
 
 

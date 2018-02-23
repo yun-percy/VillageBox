@@ -23,7 +23,7 @@ public class ExtendedPlayerProperties{
 	
 	public static final ResourceLocation key = new ResourceLocation(VillageBoxMod.MODID + ".expp");
 	
-	public static final int NewMailTimerTotal = 2000;
+	public static final int NewMailTimerTotal = 1000;
 	
 	public static ExtendedPlayerProperties get(EntityPlayer player){
 		return player.getCapability(CapExPlayerProperties.EXTENDED_PLAYER_PROPERTIES_CAPABILITY, null);

@@ -11,17 +11,17 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 public class ItemInvitation extends Item{
-	
-	public ItemInvitation(){
-		this.setUnlocalizedName(PathHelper.full("invitation"));
-		this.setCreativeTab(ModItems.tabVB);
-		this.setMaxStackSize(1);
-	}
 
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-		super.addInformation(stack, playerIn, tooltip, advanced);
-		String info = I18n.format(PathHelper.full("invitation.item.info"));
-		tooltip.add(info);
-	}
+    public ItemInvitation(){
+        this.setUnlocalizedName(PathHelper.full("invitation"));
+        this.setCreativeTab(ModItems.tabVB);
+        this.setMaxStackSize(64);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, playerIn, tooltip, advanced);
+        String info = I18n.format(PathHelper.full("invitation.item.info"));
+        tooltip.add(info);
+    }
 }
