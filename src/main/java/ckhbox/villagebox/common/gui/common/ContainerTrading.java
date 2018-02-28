@@ -87,7 +87,7 @@ public class ContainerTrading extends Container
     {
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(index);
-        
+
         if (slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();

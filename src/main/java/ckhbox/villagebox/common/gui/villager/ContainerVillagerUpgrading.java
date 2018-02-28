@@ -15,7 +15,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class ContainerVillagerUpgrading extends Container
 {
     private EntityVillager villager;
-    private InventoryUpgrading upgradingInventory;	
+    private InventoryUpgrading upgradingInventory;
     /** Instance of World. */
     private final World world;
 
@@ -66,7 +66,7 @@ public class ContainerVillagerUpgrading extends Container
 
     public void setCurrentUpgradeOptionIndex(int currentUpgradeOptionIndex)
     {
-       this.upgradingInventory.setCurrentUpgradeOptionIndex(currentUpgradeOptionIndex);
+        this.upgradingInventory.setCurrentUpgradeOptionIndex(currentUpgradeOptionIndex);
     }
 
     @SideOnly(Side.CLIENT)
@@ -80,21 +80,21 @@ public class ContainerVillagerUpgrading extends Container
     }
 
     public void upgrade(){
-    	this.upgradingInventory.upgrade();
+        this.upgradingInventory.upgrade();
     }
-    
+
     @Override
     public ItemStack transferStackInSlot(EntityPlayer playerIn, int index)
     {
-    	//NEED CHANGES
+        //NEED CHANGES
         ItemStack itemstack = null;
         Slot slot = (Slot)this.inventorySlots.get(index);
-        
+
         if (slot != null && slot.getHasStack())
         {
             ItemStack itemstack1 = slot.getStack();
             itemstack = itemstack1.copy();
-            
+
             if (index >= 3)
             {
                 if (index >= 3 && index < 30)
@@ -140,18 +140,18 @@ public class ContainerVillagerUpgrading extends Container
     public void onContainerClosed(EntityPlayer playerIn)
     {
         super.onContainerClosed(playerIn);
-    
+
         if (!this.world.isRemote)
         {
-        	playerIn.inventoryContainer.detectAndSendChanges();
-        	for(int i =0;i<3;i++){
-        		if (this.upgradingInventory.getStackInSlot(i) != null)
+            playerIn.inventoryContainer.detectAndSendChanges();
+            for(int i =0;i<3;i++){
+                if (this.upgradingInventory.getStackInSlot(i) != null)
                 {
-        			if(!playerIn.inventory.addItemStackToInventory(this.upgradingInventory.getStackInSlot(i)))
-        				playerIn.dropItem(this.upgradingInventory.getStackInSlot(i), false);
+                    if(!playerIn.inventory.addItemStackToInventory(this.upgradingInventory.getStackInSlot(i)))
+                        playerIn.dropItem(this.upgradingInventory.getStackInSlot(i), false);
                 }
-        	}
-        	playerIn.inventoryContainer.detectAndSendChanges();
+            }
+            playerIn.inventoryContainer.detectAndSendChanges();
         }
     }
 }

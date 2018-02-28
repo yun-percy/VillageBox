@@ -3,6 +3,8 @@ package ckhbox.villagebox.client.gui.villager;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.HashMap;
+import java.util.Map;
 
 import ckhbox.villagebox.client.gui.GuiHelper;
 import ckhbox.villagebox.common.entity.villager.EntityVillager;
@@ -31,38 +33,40 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
 public class GuiVillagerUpgrading extends GuiContainer{
-	
-	private static final ResourceLocation UpgradeGuiTexture = new ResourceLocation(PathHelper.full("textures/gui/villager/upgrade.png"));
 
-	private EntityVillager villager;
+    private static final ResourceLocation UpgradeGuiTexture = new ResourceLocation(PathHelper.full("textures/gui/villager/upgrade.png"));
+
+    private EntityVillager villager;
     private ArrowButton nextButton;
     private ArrowButton previousButton;
     private UpgradeButton upgradeButton;
     private int selectedUpgradeOptionIdx;
     private boolean noUpgradeOption;
-    
+    private Map<String,Integer> coin = new HashMap();
+
     private boolean meetItemsNeed;
-    
+
     protected int villagerNameOffsetY = 6;
-    
-	public GuiVillagerUpgrading(InventoryPlayer playerInventory, EntityVillager villager, World worldIn)
+
+    public GuiVillagerUpgrading(InventoryPlayer playerInventory, EntityVillager villager, World worldIn,Map<String,Integer> coin)
     {
         super(new ContainerVillagerUpgrading(playerInventory, villager, worldIn));
         this.villager = villager;
+        this.coin = coin;
     }
-	
-	@Override
+
+    @Override
     public void initGui()
     {
         super.initGui();
-        
+
         int x = (this.width - this.xSize) / 2;
-        int y = (this.height - this.ySize) / 2;  
-        
+        int y = (this.height - this.ySize) / 2;
+
         Profession[] nextUpgradeOptions = this.villager.getProfession().getUpgradeToNextOptions();
 
         this.noUpgradeOption = (nextUpgradeOptions == null || nextUpgradeOptions.length <= 0);
-        
+
         if(!this.noUpgradeOption){
             this.buttonList.add(this.nextButton = new ArrowButton(1, x + 125 + 35, y + 30 - 1, true));
             this.buttonList.add(this.previousButton = new ArrowButton(2, x + 31 - 27, y + 30 - 1, false));
@@ -71,41 +75,41 @@ public class GuiVillagerUpgrading extends GuiContainer{
             this.previousButton.enabled = false;
             this.upgradeButton.enabled = false;
         }
-        
+
     }
 
-	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
+    @Override
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
         this.mc.getTextureManager().bindTexture(UpgradeGuiTexture);
         int x = (this.width - this.xSize) / 2;
         int y = (this.height - this.ySize) / 2;
-        this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);		
-        
+        this.drawTexturedModalRect(x, y, 0, 0, this.xSize, this.ySize);
+
         //upgrading preview
         if(!this.noUpgradeOption){
-        	Profession[] nextUpgradeOptions = this.villager.getProfession().getUpgradeToNextOptions();
-        	Profession currentOption = nextUpgradeOptions[this.selectedUpgradeOptionIdx];
-        	this.villager.previewProfession = currentOption;
-        	float r = (mouseX - x) * 1.0F / this.xSize - 0.8F;
-        	r = Math.max(r, -0.8F);
-        	r = Math.min(r, 0.2F);
-        	this.drawEntityOnScreen(x + 139, y + 73, 20,r, this.villager);
-        	this.villager.previewProfession = null;
+            Profession[] nextUpgradeOptions = this.villager.getProfession().getUpgradeToNextOptions();
+            Profession currentOption = nextUpgradeOptions[this.selectedUpgradeOptionIdx];
+            this.villager.previewProfession = currentOption;
+            float r = (mouseX - x) * 1.0F / this.xSize - 0.8F;
+            r = Math.max(r, -0.8F);
+            r = Math.min(r, 0.2F);
+            this.drawEntityOnScreen(x + 139, y + 73, 20,r, this.villager);
+            this.villager.previewProfession = null;
         }
-        
-        GuiHelper.drawNameAndProfession(this.mc.fontRendererObj, villager, this.width / 2, y + villagerNameOffsetY);
-	}
-	
-	@Override
-	public void drawScreen(int mouseX, int mouseY, float partialTicks)
+
+        GuiHelper.drawNameAndProfession(this.mc.fontRendererObj, villager, this.width / 2, y + villagerNameOffsetY,coin);
+    }
+
+    @Override
+    public void drawScreen(int mouseX, int mouseY, float partialTicks)
     {
         super.drawScreen(mouseX, mouseY, partialTicks);
         if(this.noUpgradeOption){
-        	this.drawCenteredString(this.fontRendererObj, "No upgrading for next...", this.width / 2, this.height / 2, 0);
+            this.drawCenteredString(this.fontRendererObj, "No upgrading for next...", this.width / 2, this.height / 2, 0);
         }
         else{
-        	Profession[] nextUpgradeOptions = this.villager.getProfession().getUpgradeToNextOptions();
+            Profession[] nextUpgradeOptions = this.villager.getProfession().getUpgradeToNextOptions();
 
             int i = (this.width - this.xSize) / 2;
             int j = (this.height - this.ySize) / 2;
@@ -118,25 +122,25 @@ public class GuiVillagerUpgrading extends GuiContainer{
             GlStateManager.enableColorMaterial();
             GlStateManager.enableLighting();
             this.itemRender.zLevel = 100.0F;
-            
+
             int x;
             ItemStack[] upgradeNeeds = currentOption.getUpgradeToCurentNeeds();
             if(upgradeNeeds != null && upgradeNeeds.length > 0){
                 for(int itemIdx = 0;itemIdx<currentOption.getUpgradeToCurentNeeds().length;itemIdx++){
-                	itemstack = upgradeNeeds[itemIdx];
-                	x = i + 19 + (3 - upgradeNeeds.length + itemIdx) * 18;
-                	this.itemRender.renderItemAndEffectIntoGUI(itemstack, x, j + 28);
+                    itemstack = upgradeNeeds[itemIdx];
+                    x = i + 19 + (3 - upgradeNeeds.length + itemIdx) * 18;
+                    this.itemRender.renderItemAndEffectIntoGUI(itemstack, x, j + 28);
                     this.itemRender.renderItemOverlays(this.fontRendererObj, itemstack, x, j + 28);
                 }
-                
+
                 //tooltips
                 for(int itemIdx = 0;itemIdx<currentOption.getUpgradeToCurentNeeds().length;itemIdx++){
-                	itemstack = upgradeNeeds[itemIdx];
-                	x = 19 + (3 - upgradeNeeds.length + itemIdx) * 18;
-                	if (this.isPointInRegion(x, 28, 16, 16, mouseX, mouseY) && itemstack != null)
-    		        {
-    		            this.renderToolTip(itemstack, mouseX, mouseY);
-    		        }
+                    itemstack = upgradeNeeds[itemIdx];
+                    x = 19 + (3 - upgradeNeeds.length + itemIdx) * 18;
+                    if (this.isPointInRegion(x, 28, 16, 16, mouseX, mouseY) && itemstack != null)
+                    {
+                        this.renderToolTip(itemstack, mouseX, mouseY);
+                    }
                 }
             }
 
@@ -144,49 +148,49 @@ public class GuiVillagerUpgrading extends GuiContainer{
             GlStateManager.enableLighting();
             GlStateManager.enableDepth();
             RenderHelper.enableStandardItemLighting();
-            
+
             //profession hover text
             String proname = I18n.format(PathHelper.full("gui.villagerupgrade.proname"),I18n.format(currentOption.getUnloalizedDisplayName()));
             this.drawFieldHoverText(i + 122, j + 27, 35, 49, mouseX, mouseY, proname, I18n.format(currentOption.getUnloalizedDescription()));
-            
+
             //upgrade button hover text
             ArrayList<String> list = new ArrayList<String>();
             if(this.meetItemsNeed){
-            	this.drawButtonHoverText(this.upgradeButton, mouseX, mouseY, 
-            			I18n.format(PathHelper.full("gui.villagerupgrade.buttonupgrade.title")),
-            			I18n.format(PathHelper.full("gui.villagerupgrade.buttonupgrade.desc"))); 
+                this.drawButtonHoverText(this.upgradeButton, mouseX, mouseY, 
+                        I18n.format(PathHelper.full("gui.villagerupgrade.buttonupgrade.title")),
+                        I18n.format(PathHelper.full("gui.villagerupgrade.buttonupgrade.desc"))); 
             }
             else{
-            	list.add(I18n.format(PathHelper.full("gui.villagerupgrade.buttonupgrade.title.disable")));
-            	list.add(I18n.format(PathHelper.full("gui.villagerupgrade.buttonupgrade.desc.disable")));
-            	this.drawButtonHoverText(this.upgradeButton, mouseX, mouseY, list);
+                list.add(I18n.format(PathHelper.full("gui.villagerupgrade.buttonupgrade.title.disable")));
+                list.add(I18n.format(PathHelper.full("gui.villagerupgrade.buttonupgrade.desc.disable")));
+                this.drawButtonHoverText(this.upgradeButton, mouseX, mouseY, list);
             }
-                       
+
         }
     }
-	
-	private void drawFieldHoverText(int x, int y, int w, int h, int mouseX, int mouseY, List texts){	
-		if(GuiHelper.isPointInRegion(x, y, w, h, mouseX, mouseY)){
-			this.drawHoveringText(texts, mouseX, mouseY, this.fontRendererObj);
-		}
-	}
-	
-	private void drawFieldHoverText(int x, int y, int w, int h, int mouseX, int mouseY, String title, String desc){	
-		ArrayList<String> list = new ArrayList<String>();
-		list.add(title);
-		list.add(desc);		
-		drawFieldHoverText(x,y,w,h,mouseX,mouseY,list);
-	}
-	
-	private void drawButtonHoverText(GuiButton button, int mouseX, int mouseY, String title, String desc){	
-		this.drawFieldHoverText(button.xPosition, button.yPosition, button.width, button.height, mouseX, mouseY, title, desc);
-	}
-	
-	private void drawButtonHoverText(GuiButton button, int mouseX, int mouseY, List list){	
-		this.drawFieldHoverText(button.xPosition, button.yPosition, button.width, button.height, mouseX, mouseY, list);
-	}
-	
-	public void drawEntityOnScreen(int posX, int posY, int scale,float r, EntityLivingBase ent)
+
+    private void drawFieldHoverText(int x, int y, int w, int h, int mouseX, int mouseY, List texts){
+        if(GuiHelper.isPointInRegion(x, y, w, h, mouseX, mouseY)){
+            this.drawHoveringText(texts, mouseX, mouseY, this.fontRendererObj);
+        }
+    }
+
+    private void drawFieldHoverText(int x, int y, int w, int h, int mouseX, int mouseY, String title, String desc){
+        ArrayList<String> list = new ArrayList<String>();
+        list.add(title);
+        list.add(desc);		
+        drawFieldHoverText(x,y,w,h,mouseX,mouseY,list);
+    }
+
+    private void drawButtonHoverText(GuiButton button, int mouseX, int mouseY, String title, String desc){	
+        this.drawFieldHoverText(button.xPosition, button.yPosition, button.width, button.height, mouseX, mouseY, title, desc);
+    }
+
+    private void drawButtonHoverText(GuiButton button, int mouseX, int mouseY, List list){	
+        this.drawFieldHoverText(button.xPosition, button.yPosition, button.width, button.height, mouseX, mouseY, list);
+    }
+
+    public void drawEntityOnScreen(int posX, int posY, int scale,float r, EntityLivingBase ent)
     {
         GlStateManager.enableColorMaterial();
         GlStateManager.pushMatrix();
@@ -226,28 +230,28 @@ public class GuiVillagerUpgrading extends GuiContainer{
         GlStateManager.disableTexture2D();
         GlStateManager.setActiveTexture(OpenGlHelper.defaultTexUnit);
     }
-	
-	@Override
-	public void updateScreen()
+
+    @Override
+    public void updateScreen()
     {
         super.updateScreen();
-        
-        if(!this.noUpgradeOption){    
-	        Profession[] nextUpgradeOptions = this.villager.getProfession().getUpgradeToNextOptions();
-	        if (nextUpgradeOptions != null)
-	        {
-	            this.nextButton.enabled = this.selectedUpgradeOptionIdx < nextUpgradeOptions.length - 1;
-	            this.previousButton.enabled = this.selectedUpgradeOptionIdx > 0;
-	        }
-	        
-	        //upgrade button
-	        this.meetItemsNeed = ((ContainerVillagerUpgrading)this.inventorySlots).getUpgradingInventory().canUpgrade();
-	        this.upgradeButton.enabled = (this.meetItemsNeed);
+
+        if(!this.noUpgradeOption){
+            Profession[] nextUpgradeOptions = this.villager.getProfession().getUpgradeToNextOptions();
+            if (nextUpgradeOptions != null)
+            {
+                this.nextButton.enabled = this.selectedUpgradeOptionIdx < nextUpgradeOptions.length - 1;
+                this.previousButton.enabled = this.selectedUpgradeOptionIdx > 0;
+            }
+
+            //upgrade button
+            this.meetItemsNeed = ((ContainerVillagerUpgrading)this.inventorySlots).getUpgradingInventory().canUpgrade();
+            this.upgradeButton.enabled = (this.meetItemsNeed);
         }
     }
 
-	@Override
-	protected void actionPerformed(GuiButton button) throws IOException
+    @Override
+    protected void actionPerformed(GuiButton button) throws IOException
     {
         boolean flag = false;
 
@@ -280,29 +284,29 @@ public class GuiVillagerUpgrading extends GuiContainer{
             ((ContainerVillagerUpgrading)this.inventorySlots).setCurrentUpgradeOptionIndex(this.selectedUpgradeOptionIdx);
             ModNetwork.getInstance().sendToServer(new MessageGuiSelectUpgradeOptionIndex(this.selectedUpgradeOptionIdx));
         }
-        
+
         if(button == this.upgradeButton){
-        	ModNetwork.getInstance().sendToServer(new MessageGuiVillagerUpgrade());
+            ModNetwork.getInstance().sendToServer(new MessageGuiVillagerUpgrade());
         }
     }
-	
-	@Override
-	public void onGuiClosed() {
-		super.onGuiClosed();
-		
-		ModNetwork.getInstance().sendToServer(new MessageGuiSetInteracting(this.villager.getEntityId(), this.villager.dimension, false));
-	}
-	
-	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		super.keyTyped(typedChar, keyCode);
-		
-		if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()){
-			ModNetwork.getInstance().sendToServer(new MessageGuiSetInteracting(this.villager.getEntityId(), this.villager.dimension, false));
-		}
-	}
-	
-	@SideOnly(Side.CLIENT)
+
+    @Override
+    public void onGuiClosed() {
+        super.onGuiClosed();
+
+        ModNetwork.getInstance().sendToServer(new MessageGuiSetInteracting(this.villager.getEntityId(), this.villager.dimension, false));
+    }
+
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        super.keyTyped(typedChar, keyCode);
+
+        if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()){
+            ModNetwork.getInstance().sendToServer(new MessageGuiSetInteracting(this.villager.getEntityId(), this.villager.dimension, false));
+        }
+    }
+
+    @SideOnly(Side.CLIENT)
     static class ArrowButton extends GuiButton
     {
         private final boolean left;
@@ -344,8 +348,8 @@ public class GuiVillagerUpgrading extends GuiContainer{
             }
         }
     }
-	
-	@SideOnly(Side.CLIENT)
+
+    @SideOnly(Side.CLIENT)
     static class UpgradeButton extends GuiButton
     {
 
@@ -380,5 +384,5 @@ public class GuiVillagerUpgrading extends GuiContainer{
             }
         }
     }
-	
+
 }

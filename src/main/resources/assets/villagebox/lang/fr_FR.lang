@@ -353,3 +353,7 @@ villagebox:mail.newvillager2.content=Je suis fatigué de ma vie actuelle et je c
 
 # CreativeTab
 itemGroup.tabVillageBox=Village Box
+#coin
+villagebox:gui.bronzeCoin.name=bronze
+villagebox:gui.silverCoin.name=silver
+villagebox:gui.goldCoin.name=Gold

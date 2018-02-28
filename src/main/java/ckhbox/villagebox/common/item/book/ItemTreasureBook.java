@@ -18,42 +18,42 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.world.World;
 
 public class ItemTreasureBook extends Item{
-	
-	private int level;
-	
-	public ItemTreasureBook(int lvl){
-		this.setUnlocalizedName(PathHelper.full("treasurebook" + lvl));
-		this.setCreativeTab(ModItems.tabVB);
-		this.setMaxStackSize(1);
-		this.level = lvl;
-	}
 
-	@Override
-	public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
-		
-		if(!worldIn.isRemote){
-			//increase treasure hunt level
-			if(ExtendedPlayerProperties.get(playerIn).upgradeTreasureHuntLevelTo(this.level)){
-				playerIn.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
-				playerIn.addChatMessage(new TextComponentTranslation(PathHelper.full("message.player.treasurelvlupgrade.success"),this.level));
-				itemStackIn.stackSize -= 1;
-				return new ActionResult(EnumActionResult.SUCCESS,itemStackIn);
-			}
-			else{
-				playerIn.addChatMessage(new TextComponentTranslation(PathHelper.full("message.player.treasurelvlupgrade.failed")));
-				return new ActionResult(EnumActionResult.FAIL,itemStackIn);
-			}
-		}
-		
-		return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
-	}
+    private int level;
 
-	@Override
-	public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
-		super.addInformation(stack, playerIn, tooltip, advanced);
-		String info = I18n.format(PathHelper.full("book.treasure.item.info"), this.level);
-		tooltip.add(info);
-	}
-	
-	
+    public ItemTreasureBook(int lvl){
+        this.setUnlocalizedName(PathHelper.full("treasurebook" + lvl));
+        this.setCreativeTab(ModItems.tabVB);
+        this.setMaxStackSize(1);
+        this.level = lvl;
+    }
+
+    @Override
+    public ActionResult<ItemStack> onItemRightClick(ItemStack itemStackIn, World worldIn, EntityPlayer playerIn, EnumHand hand) {
+
+        if(!worldIn.isRemote){
+            //increase treasure hunt level
+            if(ExtendedPlayerProperties.get(playerIn).upgradeTreasureHuntLevelTo(this.level)){
+                playerIn.playSound(SoundEvents.ENTITY_PLAYER_LEVELUP, 1.0F, 1.0F);
+                playerIn.addChatMessage(new TextComponentTranslation(PathHelper.full("message.player.treasurelvlupgrade.success"),this.level));
+                itemStackIn.stackSize -= 1;
+                return new ActionResult(EnumActionResult.SUCCESS,itemStackIn);
+            }
+            else{
+                playerIn.addChatMessage(new TextComponentTranslation(PathHelper.full("message.player.treasurelvlupgrade.failed")));
+                return new ActionResult(EnumActionResult.FAIL,itemStackIn);
+            }
+        }
+
+        return super.onItemRightClick(itemStackIn, worldIn, playerIn, hand);
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, EntityPlayer playerIn, List<String> tooltip, boolean advanced) {
+        super.addInformation(stack, playerIn, tooltip, advanced);
+        String info = I18n.format(PathHelper.full("book.treasure.item.info"), this.level);
+        tooltip.add(info);
+    }
+
+
 }

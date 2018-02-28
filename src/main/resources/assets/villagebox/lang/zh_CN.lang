@@ -127,6 +127,11 @@ villagebox:gui.mail.button.approve=许可
 villagebox:gui.mail.hi=你好,§o%s
 villagebox:gui.mail.from=§o%s
 
+#coin
+villagebox:gui.bronzeCoin.name=铜
+villagebox:gui.silverCoin.name=银
+villagebox:gui.goldCoin.name=金
+
 # Message
 
 villagebox:message.villager.isbusy=这个村民正忙...

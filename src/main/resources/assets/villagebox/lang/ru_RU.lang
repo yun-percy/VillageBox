@@ -390,3 +390,7 @@ villagebox:quest.text=Привет %s, не мог бы ты мне помочь
 
 # CreativeTab
 itemGroup.tabVillageBox=Village Box
+#coin
+villagebox:gui.bronzeCoin.name=bronze
+villagebox:gui.silverCoin.name=silver
+villagebox:gui.goldCoin.name=Gold

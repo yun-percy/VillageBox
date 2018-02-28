@@ -1,6 +1,8 @@
 package ckhbox.villagebox.client.gui.villager;
 
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 import ckhbox.villagebox.client.gui.GuiHelper;
 import ckhbox.villagebox.client.gui.common.GuiTrading;
@@ -13,37 +15,39 @@ import net.minecraft.world.World;
 public class GuiVillagerTrading extends GuiTrading{
 
     protected int villagerNameOffsetY = 6;
-	private EntityVillager villager;
-    
-	public GuiVillagerTrading(InventoryPlayer playerInventory, EntityVillager villager, World worldIn) {
-		super(playerInventory, villager, worldIn);
-		this.villager = villager;
-	}
-	
-	@Override
-	protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
-		super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
-		
-		int x = (this.width - this.xSize) / 2;
+    private EntityVillager villager;
+    private Map<String,Integer> coin = new HashMap();
+
+    public GuiVillagerTrading(InventoryPlayer playerInventory, EntityVillager villager, World worldIn,Map<String,Integer> coin) {
+        super(playerInventory, villager, worldIn);
+        this.villager = villager;
+        this.coin = coin;
+    }
+
+    @Override
+    protected void drawGuiContainerBackgroundLayer(float partialTicks, int mouseX, int mouseY) {
+        super.drawGuiContainerBackgroundLayer(partialTicks, mouseX, mouseY);
+
+        int x = (this.width - this.xSize) / 2;
         int y = (this.height - this.ySize) / 2;
-		
-        GuiHelper.drawNameAndProfession(this.mc.fontRendererObj, villager, this.width / 2, y + villagerNameOffsetY);
-		
-	}
-	
-	@Override
-	public void onGuiClosed() {
-		super.onGuiClosed();
-		
-		ModNetwork.getInstance().sendToServer(new MessageGuiSetInteracting(this.villager.getEntityId(), this.villager.dimension, false));
-	}
-	@Override
-	protected void keyTyped(char typedChar, int keyCode) throws IOException {
-		super.keyTyped(typedChar, keyCode);
-		
-		if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()){
-			ModNetwork.getInstance().sendToServer(new MessageGuiSetInteracting(this.villager.getEntityId(), this.villager.dimension, false));
-		}
-	}
+
+        GuiHelper.drawNameAndProfession(this.mc.fontRendererObj, villager, this.width / 2, y + villagerNameOffsetY,coin);
+
+    }
+
+    @Override
+    public void onGuiClosed() {
+        super.onGuiClosed();
+
+        ModNetwork.getInstance().sendToServer(new MessageGuiSetInteracting(this.villager.getEntityId(), this.villager.dimension, false));
+    }
+    @Override
+    protected void keyTyped(char typedChar, int keyCode) throws IOException {
+        super.keyTyped(typedChar, keyCode);
+
+        if (keyCode == 1 || keyCode == this.mc.gameSettings.keyBindInventory.getKeyCode()){
+            ModNetwork.getInstance().sendToServer(new MessageGuiSetInteracting(this.villager.getEntityId(), this.villager.dimension, false));
+        }
+    }
 
 }
